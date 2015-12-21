@@ -13,7 +13,7 @@ wall_thickness = 1.5;
 
 //tube parameters
 tube_diameter = 25.7; //chemglass 25mmx100mm //actual dia 24.7
-//tube_diameter = 12.2*2; //kimax 24mm cfuge tube //actual diameter 23.8mm
+tube_diameter = 24.8; //kimax 24mm cfuge tube //actual diameter 23.8mm
 tube_holder_wall = wall_thickness; 
 tube_holder_height = 100;
 tube_window_width = 12;
