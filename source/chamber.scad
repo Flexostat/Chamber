@@ -1,6 +1,9 @@
+//universal constants:
+in = 25.4;
+
 //options:
 heater_cut_size = 0; //0=off -- Experimental
-fan_stir = 1; //0=stepper motor stir, 1=20mm fan stir
+fan_stir = 0; //0=stepper motor stir, 1=20mm fan stir
 
 //general parameters
 tap_hole_632 = 2.95;
@@ -12,8 +15,8 @@ laser_path_height = 30;
 wall_thickness = 1.5;
 
 //tube parameters
-tube_diameter = 25.7; //chemglass 25mmx100mm //actual dia 24.7
-tube_diameter = 24.8; //kimax 24mm cfuge tube //actual diameter 23.8mm
+tube_diameter = 25.6; //chemglass 25mmx100mm //actual dia 24.7
+//tube_diameter = 24.8; //kimax 24mm cfuge tube //actual diameter 23.8mm
 tube_holder_wall = wall_thickness; 
 tube_holder_height = 100;
 tube_window_width = 12;
@@ -31,6 +34,7 @@ PCB_height=25;
 ethernet_ulc = [(2-0.55)*25.4,-3-1];
 ethernet_size =[17,17];
 ethernet_depth = 1.7;
+header_ulc = [(2-0.8)*25.4,1.787*in/2-0.55*in-0.1/2*in];
 PCB_tube_hole_diameter = 30; 
 laser_end_x = 42.5;  
 
@@ -182,10 +186,12 @@ module PCB_holes(screw_hole_dia) {
       translate(xy)
         circle(d=screw_hole_dia);
     }
-  color("gray") translate([ethernet_ulc[0],
+  translate([ethernet_ulc[0],
     ethernet_ulc[1]-ethernet_size[1],
     sensor_depth-ethernet_depth])
       cube([ethernet_size[0],ethernet_size[1],ethernet_depth+1],center = false);
+  translate([header_ulc[0],header_ulc[1],sensor_depth-ethernet_depth])
+    cube([0.8*25.4,0.1*25.4,2]);
 }
 
 module beam_splitter(size,thick) {
