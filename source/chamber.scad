@@ -1,6 +1,7 @@
 //universal constants:
 in = 25.4;
 
+test = false;
 //options:
 heater_cut_size = 0; //0=off -- Experimental
 fan_stir = 0; //0=stepper motor stir, 1=20mm fan stir
@@ -9,7 +10,7 @@ fan_stir = 0; //0=stepper motor stir, 1=20mm fan stir
 tap_hole_632 = 2.95;
 splitter_size = 12; //12mmx12mm microscope slide
 laser_length = 17;
-laser_dia = 7.1;
+laser_dia = 7.1; //7.1 for digikey laser.  6.1 for cheap chinese laser
 laser_path_dia = 5;
 laser_path_height = 30;
 wall_thickness = 1.5;
@@ -37,6 +38,7 @@ ethernet_depth = 1.7;
 header_ulc = [(2-0.8)*25.4,1.787*in/2-0.55*in-0.1/2*in];
 PCB_tube_hole_diameter = 30; 
 laser_end_x = 42.5;  
+laser_zcomp = -0.1;
 
 //Stir motor parameters
 hole_dist = 42;
@@ -81,8 +83,17 @@ difference() {
     translate([0,0,heater_cut_size/2])
     rect_helix(10,tube_holder_height,tube_diameter/2+heater_cut_size/2,heater_cut_size,300);
   }
+  if (test) {
+      cube([100,100,43],center=true);
+      translate([0,0,115])
+      cube([100,100,150],center=true);
+      translate([-50,0,50])
+      cube([100,100,100],center=true);
+  }
 }
-tube_tabs(tube_diameter);
+if (!test){
+    tube_tabs(tube_diameter);
+}
 
 /////////////////////////////////
 //Modules                      //
@@ -208,17 +219,17 @@ module beam_splitter(size,thick) {
 }
 
 module laser(screw_hole_dia) {
-  color("red") translate([rx_llc[0],0,0]) rotate([0,90,0]) 
+  color("red") translate([rx_llc[0],0,laser_zcomp]) rotate([0,90,0]) 
   cylinder(h=abs(rx_llc[0])+splitter_center_x + splitter_size/sqrt(2)/2+1,
     d=laser_path_dia , center=false,$fn=30);
-  color("red") translate([abs(tx_llc[0])+sensor_holesize[1]/2,0,0])
+  color("red") translate([abs(tx_llc[0])+sensor_holesize[1]/2,0,laser_zcomp])
     rotate([90,0,0])
       cylinder(h=abs(tx_llc[1]),d=laser_path_dia , center=false,$fn=30);
-  color("pink") translate([splitter_center_x + splitter_size/sqrt(2)/2+1,0,0])
+  color("pink") translate([splitter_center_x + splitter_size/sqrt(2)/2+1,0,laser_zcomp])
     rotate([0,90,0])
       cylinder(h=laser_length,d=laser_dia+0.2,center=false,$fn=300);
   for (i = [0:360/3:359]) {
-    rotate([i,0,0]) color("gray") translate([PCB_rect_holecenter[0],0,0]) 
+    rotate([i,0,0]) color("gray") translate([PCB_rect_holecenter[0],0,laser_zcomp]) 
       cylinder(h=20,d=screw_hole_dia,center=false,$fn=30);
   }
 }
