@@ -29,7 +29,8 @@ sensor_depth = 3.8;
 rx_llc = [-21.32,-2.5]; //lower left corner of RX sensor hole
 tx_llc = [0.9*25.4-sensor_holesize[1]/2,-9.89]; //lower left corner of TX sensor hole
 PCB_hole_locations = [[-20.32,7.62],[-20.32,-7.62],[1.2*25.4,-8.89]];
-PCB_rect_holesize = [7,7];
+PCB_rect_holesize = [12,7];
+PCB_rect_offset_out = 2.5;
 PCB_rect_holecenter = [1.3*25.4,0];
 PCB_height=25;
 ethernet_ulc = [(2-0.55)*25.4,-3-1];
@@ -241,7 +242,7 @@ module bevel(angle,r,x1,x2) {
 module PCB_body(x1,x2) { //length of x in each dir 
   translate([x1,-PCB_height/2,-base_depth])
     cube([abs(x2-x1),PCB_height,sensor_depth+base_depth]);
-  color("green") translate([PCB_rect_holecenter[0]-PCB_rect_holesize[0]/2
+  color("green") translate([PCB_rect_holecenter[0]-PCB_rect_holesize[0]/2+PCB_rect_offset_out
     ,PCB_rect_holecenter[1]-PCB_rect_holesize[1]/2,sensor_depth])
       cube([PCB_rect_holesize[0],PCB_rect_holesize[1],3],center = false);
 }
