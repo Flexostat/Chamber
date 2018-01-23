@@ -1,7 +1,8 @@
 diameter = 21;
 //magnet_hole_dia = 6.4;
-magnet_hole_dia = 6.6;
-magnet_hole_depth = 4;
+magnet_hole_dia = 6.55;
+//magnet_hole_depth = 4;
+magnet_hole_depth = 3.2;
 height = 10;
 //shaft_dia = 3.05;
 shaft_dia = 3.3;
